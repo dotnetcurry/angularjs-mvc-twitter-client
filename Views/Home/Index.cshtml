@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Hello AngularJS";
+}
+
+<div ng-app="ngTwitter">
+    <!-- More Goodness Coming -->
+
+    <script type="text/ng-template" id="timeline">
+        <div>
+            <textarea ng-model="statusText" rows="5"></textarea>
+            <button class="btn btn-success" ng-click="sendStatus()">Tweet</button>
+        </div>
+        <h3>
+            <ng-pluralize count="tweets.length" when="newTweets"></ng-pluralize>
+        </h3>
+        <table class="table table-striped">
+            <tr ng-repeat="status in tweets">
+                <td>
+                    <img src="{{status.ImageUrl}}" />
+                </td>
+                <td>
+                    <div>
+                        <strong>{{status.ScreenName}}</strong>
+                        <br />
+                        {{status.Tweet}}
+                    </div>
+                    <div>
+                        <retweet-button>Retweet</retweet-button>
+                        <a class="btn btn-primary btn-xs" href="#/status/{{status.Id}}">Details</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </script>
+    <script type="text/ng-template" id="status">
+        <table class="table table-striped">
+            <tr>
+                <td>
+                    <img src="{{status.ImageUrl}}" />
+                </td>
+                <td>
+                    <div>
+                        <strong>{{status.ScreenName}}</strong>
+                        <br />
+                        {{status.Tweet}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <retweet-button text="Retweet" clickevent="retweet(status)">Retweet</retweet-button>
+                    </div>
+                </td>
+                <td>
+                    <span class="label label-info" >Retweeted </span> <span class="badge">{{status.RetweetCount}}</span>
+                    <span class="label label-info">Favorited </span> <span class="badge">{{status.FavoriteCount}}</span>
+                </td>
+            </tr>
+        </table>
+        <div ng-show="status.HasMedia">
+            <img src="{{status.MediaUrl}}" />
+        </div>
+    </script>
+
+    <ng-view></ng-view>
+</div>
+
